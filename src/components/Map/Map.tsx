@@ -1,5 +1,9 @@
-import * as S from "./Styles";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import * as S from "./styles";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import { PopoverRadio } from "../PopoverRadio";
+import { Icon } from "leaflet";
+import MarkerClusterGroup from "react-leaflet-cluster";
 
 type Place = {
   id?: string;
@@ -18,7 +22,7 @@ type MapProps = {
 const CustomTileLayer = () => {
   return import.meta.env.VITE_MAPBOX_API_KEY ? (
     <TileLayer
-      // attribution='© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      attribution='© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       url={`https://api.mapbox.com/styles/v1/${
         import.meta.env.VITE_MAPBOX_USERID
       }/${
@@ -29,7 +33,7 @@ const CustomTileLayer = () => {
     />
   ) : (
     <TileLayer
-      // attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
   );
@@ -40,24 +44,33 @@ export const Map = ({ places }: MapProps) => {
     [-Infinity, -Infinity], // coordenadas do canto sudoeste (canto inferior esquerdo)
     [90, Infinity], // coordenadas do canto nordeste (canto superior direito)
   ];
-  return (
-    <S.Container>
-      <MapContainer
-        style={{ height: "100vh", width: "100%" }}
-        center={[51.505, -0.09]}
-        maxBounds={bounds}
-        minZoom={3}
-        zoom={5}
-      >
-        <CustomTileLayer />
-        {places?.map(({ slug, id, location, name }) => {
-          const { latitude, longitude } = location;
 
-          return (
-            <Marker key={`place-${id}`} position={[latitude, longitude]} />
-          );
-        })}
-      </MapContainer>
-    </S.Container>
+  const customIcon = new Icon({
+    iconSize: [45, 45],
+    iconUrl: "https://cdn-icons-png.flaticon.com/512/10054/10054852.png",
+  });
+
+  return (
+    <MapContainer
+      style={{ height: "100vh", width: "100%" }}
+      center={[48.8566, 2.3522]}
+      maxBounds={bounds}
+      minZoom={3}
+      zoom={5}
+    >
+      <CustomTileLayer />
+      <MarkerClusterGroup>
+        {places?.map(({ slug, id, location, name }) => (
+          <Marker
+            icon={customIcon}
+            key={`place-${id}`}
+            position={[location.latitude, location.longitude]}
+            eventHandlers={{}}
+          >
+            <Popup>teste</Popup>
+          </Marker>
+        ))}
+      </MarkerClusterGroup>
+    </MapContainer>
   );
 };

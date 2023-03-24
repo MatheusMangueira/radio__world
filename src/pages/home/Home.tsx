@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Map } from "../../components";
+import { PopoverRadio } from "../../components/PopoverRadio";
 import { stations } from "../../services/api/radio";
 
 export const Home = () => {
@@ -19,5 +20,9 @@ export const Home = () => {
     setStationsRadioT(stationsRadio);
   }, []);
 
-  return <Map places={stationsRadioT} />;
+  return (
+    <>
+      <Map places={stationsRadioT} />
+    </>
+  );
 };
