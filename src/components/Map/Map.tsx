@@ -15,6 +15,26 @@ type MapProps = {
   places?: Place[];
 };
 
+const CustomTileLayer = () => {
+  return import.meta.env.VITE_MAPBOX_API_KEY ? (
+    <TileLayer
+      // attribution='© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      url={`https://api.mapbox.com/styles/v1/${
+        import.meta.env.VITE_MAPBOX_USERID
+      }/${
+        import.meta.env.VITE_MAPBOX_STYLEID
+      }/tiles/256/{z}/{x}/{y}@2x?access_token=${
+        import.meta.env.VITE_MAPBOX_API_KEY
+      }`}
+    />
+  ) : (
+    <TileLayer
+      // attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    />
+  );
+};
+
 export const Map = ({ places }: MapProps) => {
   const bounds = [
     [-Infinity, -Infinity], // coordenadas do canto sudoeste (canto inferior esquerdo)
@@ -29,8 +49,7 @@ export const Map = ({ places }: MapProps) => {
         minZoom={3}
         zoom={5}
       >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-
+        <CustomTileLayer />
         {places?.map(({ slug, id, location, name }) => {
           const { latitude, longitude } = location;
 
