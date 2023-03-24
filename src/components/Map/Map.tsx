@@ -2,9 +2,9 @@ import * as S from "./Styles";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 
 type Place = {
-  id: string;
-  name: string;
-  slug: string;
+  id?: string;
+  name?: string;
+  slug?: string;
   location: {
     latitude: number;
     longitude: number;
