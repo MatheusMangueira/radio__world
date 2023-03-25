@@ -17,8 +17,7 @@ export const ContainerPlayStations = styled.div`
   justify-content: space-around;
   align-items: center;
 `;
-export const Options = styled.div``;
 
-export const PlayStations = styled.audio``;
+export const Options = styled.div``;
 
 export const IconPlayStation = styled.div``;
