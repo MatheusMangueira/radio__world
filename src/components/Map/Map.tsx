@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { PopoverRadio } from "../PopoverRadio";
 import { Icon } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
+import { stations } from "../../services/api/radio";
 
 type Place = {
   id?: string;
@@ -40,9 +41,9 @@ const CustomTileLayer = () => {
 };
 
 export const Map = ({ places }: MapProps) => {
-  const bounds = [
-    [-Infinity, -Infinity], // coordenadas do canto sudoeste (canto inferior esquerdo)
-    [90, Infinity], // coordenadas do canto nordeste (canto superior direito)
+  const bounds: [number, number][] = [
+    [-90, -190],
+    [90, 190],
   ];
 
   const customIcon = new Icon({
@@ -50,9 +51,16 @@ export const Map = ({ places }: MapProps) => {
     iconUrl: "https://cdn-icons-png.flaticon.com/512/10054/10054852.png",
   });
 
+  console.log(stations);
+
   return (
     <MapContainer
-      style={{ height: "100vh", width: "100%" }}
+      style={{
+        height: "100vh",
+        width: "100v%",
+        background:
+          "linear-gradient(155deg, #736e8a 0, #504d72 25%, #282c59 50%, #000e41 75%, #00002d 100%)",
+      }}
       center={[48.8566, 2.3522]}
       maxBounds={bounds}
       minZoom={3}

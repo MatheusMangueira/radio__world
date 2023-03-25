@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Map } from "../../components";
+import { Play } from "../../components/Play";
 import { PopoverRadio } from "../../components/PopoverRadio";
+import { SideBar } from "../../components/SideBar";
 import { stations } from "../../services/api/radio";
 
 export const Home = () => {
@@ -12,6 +14,7 @@ export const Home = () => {
       longitude: station.geoLong || 0,
     },
     name: station.name,
+    url: station.urlResolved,
     id: station.id,
     slug: station.country,
   }));
@@ -20,8 +23,12 @@ export const Home = () => {
     setStationsRadioT(stationsRadio);
   }, []);
 
+  const urls = stationsRadio.map((stationsURL) => stationsURL.url);
+
   return (
     <>
+      <SideBar />
+      <Play src={urls && urls} />
       <Map places={stationsRadioT} />
     </>
   );
