@@ -20,7 +20,7 @@ export const SideBar = () => {
     <>
       <GlobalStyle />
       <S.Container>
-        <S.TitleHeader>Radio Stations</S.TitleHeader>
+        <S.TitleHeader>Radio World</S.TitleHeader>
         {optionsList.map((item) => {
           return (
             <S.ContainerList>

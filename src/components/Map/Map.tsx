@@ -30,6 +30,21 @@ const CustomTileLayer = () => {
 };
 
 export const Map = () => {
+  const [isClicked, setIsClicked] = useState(true);
+  const [refMenu, setRefMenu] = useState<any>();
+  const [stationsRadioT, setStationsRadioT] = useState<any>();
+
+  useEffect(() => {
+    setStationsRadioT(stationsRadio);
+  }, []);
+
+  useEffect(() => {
+    setRefMenu({
+      favicon: "https://cdn-icons-png.flaticon.com/512/10054/10054852.png",
+      name: "Radio World",
+    });
+  }, []);
+
   const bounds: [number, number][] = [
     [-90, -190],
     [90, 190],
@@ -40,8 +55,6 @@ export const Map = () => {
     iconUrl: "https://cdn-icons-png.flaticon.com/512/10054/10054852.png",
   });
 
-  const [stationsRadioT, setStationsRadioT] = useState<any>();
-
   const stationsRadio = stations.map((station) => ({
     location: {
       latitude: station.geoLat || 0,
@@ -49,19 +62,22 @@ export const Map = () => {
     },
     name: station.name,
     url: station.urlResolved,
-    id: station.id, 
+    id: station.id,
     slug: station.country,
+    favicon: station.favicon,
   }));
-
-  useEffect(() => {
-    setStationsRadioT(stationsRadio);
-  }, []);
 
   const urls = stations.map((stations) => stations.url);
 
   return (
     <>
-      <BottomMenu src={urls && urls} children={<PlayMusic src={urls} />} />
+      <BottomMenu
+        src={urls && urls}
+        children={<PlayMusic src={urls} />}
+        heat={<div></div>}
+        favicon={refMenu?.favicon}
+        name={refMenu?.name}
+      />
       <MapContainer
         style={{
           height: "100vh",
@@ -76,7 +92,7 @@ export const Map = () => {
       >
         <CustomTileLayer />
         <MarkerClusterGroup>
-          {stationsRadio?.map(({ id, location, name, url }) => {
+          {stationsRadio?.map(({ id, location, name, url, favicon }) => {
             return (
               <Marker
                 icon={customIcon}
@@ -84,7 +100,16 @@ export const Map = () => {
                 position={[location.latitude, location.longitude]}
                 eventHandlers={{}}
               >
-                <Popup>teste</Popup>
+                <Popup>
+                  <PopoverRadio
+                    play={() => setRefMenu({ favicon, name })}
+                    isActived={isClicked}
+                    name={name}
+                    img={favicon}
+                    height={"50px"}
+                    width={"50px"}
+                  />
+                </Popup>
               </Marker>
             );
           })}
