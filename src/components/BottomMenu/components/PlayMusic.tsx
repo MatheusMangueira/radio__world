@@ -1,5 +1,8 @@
+import { Pause, Play } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import * as S from "./styles";
+
+import BounceLoader from "react-spinners/BounceLoader";
 
 type Props = {
   urlMusic?: string;
@@ -22,11 +25,17 @@ export const PlayMusic = ({ urlMusic }: Props) => {
 
   return (
     <>
-      {isPlay ? (
-        <S.ButtonPaused onClick={play}>PAUSAR</S.ButtonPaused>
-      ) : (
-        <S.Button onClick={play}>PLAY</S.Button>
-      )}
+      <S.AudioContainer>
+        <S.Button onClick={play}>
+          {!isPlay ? (
+            <Play size={24} weight="fill" />
+          ) : (
+            <Pause size={24} weight="fill" />
+          )}
+        </S.Button>
+
+        <S.Live>Live</S.Live>
+      </S.AudioContainer>
       <S.Audio
         key={`${isPlay}`}
         autoPlay={isPlay}

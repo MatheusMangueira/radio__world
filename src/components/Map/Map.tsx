@@ -8,6 +8,7 @@ import { PlayMusic } from "../BottomMenu/components";
 import { BottomMenu } from "../BottomMenu";
 import { useCallback, useEffect, useState } from "react";
 import { stations } from "../../services/api/radio";
+import { Heart } from "@phosphor-icons/react";
 
 const CustomTileLayer = () => {
   return import.meta.env.VITE_MAPBOX_API_KEY ? (
@@ -33,6 +34,7 @@ export const Map = () => {
   const [refMenu, setRefMenu] = useState<any>();
   const [playUrl, setPlayUrl] = useState<string>("");
   const [clickedItemId, setClickedItemId] = useState(null);
+  const [myFavorite, setMyFavorite] = useState<any>([]);
 
   useEffect(() => {
     setRefMenu({
@@ -61,25 +63,42 @@ export const Map = () => {
     }
   }, []);
 
+  const addFavorite = useCallback((data: any) => {
+    if (localStorage.hasOwnProperty("myFavorite")) {
+      setMyFavorite(JSON.parse(localStorage?.getItem("myFavorite") || ""));
+    }
+    myFavorite.push({ data });
+    localStorage.setItem("myFavorite", JSON.stringify(myFavorite));
+  }, []);
+
   return (
     <>
       <BottomMenu
-        heat={<div> coração</div>}
+        heat={
+          <div
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={() => addFavorite({ refMenu, playUrl })}
+          >
+            <Heart size={34} />
+          </div>
+        }
         favicon={refMenu?.favicon}
         name={refMenu?.name}
       >
-        {playUrl ? <PlayMusic urlMusic={playUrl} /> : <div></div>}
+        {playUrl ? <PlayMusic urlMusic={playUrl} /> : <div />}
       </BottomMenu>
       <MapContainer
         style={{
           height: "100vh",
-          width: "100v%",
+          width: "100%",
           background:
             "linear-gradient(155deg, #736e8a 0, #504d72 25%, #282c59 50%, #000e41 75%, #00002d 100%)",
         }}
         center={[48.8566, 2.3522]}
         maxBounds={bounds}
-        minZoom={3}
+        minZoom={2}
         zoom={5}
       >
         <CustomTileLayer />
@@ -90,7 +109,6 @@ export const Map = () => {
                 icon={customIcon}
                 key={`place-${id}`}
                 position={[Number(geoLat), Number(geoLong)]}
-                eventHandlers={{}}
               >
                 <Popup>
                   <PopoverRadio
