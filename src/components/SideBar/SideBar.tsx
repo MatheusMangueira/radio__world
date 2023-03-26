@@ -25,7 +25,7 @@ export const SideBar = () => {
         <S.TitleHeader>Radio World</S.TitleHeader>
         {optionsList.map((item) => {
           return (
-            <S.ContainerList>
+            <S.ContainerList key={item.id}>
               <S.List href={item.url}>
                 <S.Icon>{item.icon}</S.Icon>
                 <S.NameList onClick={() => {}} key={item.id}>

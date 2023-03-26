@@ -36,6 +36,8 @@ export const Map = () => {
   const [clickedItemId, setClickedItemId] = useState(null);
   const [myFavorite, setMyFavorite] = useState<any>([]);
 
+  const [heart, setHeart] = useState(false);
+
   useEffect(() => {
     setRefMenu({
       favicon: "https://cdn-icons-png.flaticon.com/512/10054/10054852.png",
@@ -71,19 +73,20 @@ export const Map = () => {
     localStorage.setItem("myFavorite", JSON.stringify(myFavorite));
   }, []);
 
+
   return (
     <>
       <BottomMenu
-        heat={
-          <div
-            style={{
-              cursor: "pointer",
-            }}
-            onClick={() => addFavorite({ refMenu, playUrl })}
-          >
-            <Heart size={34} />
-          </div>
-        }
+        // heat={
+        //   <div
+        //     style={{
+        //       cursor: "pointer",
+        //     }}
+        //     onClick={() => addFavorite({ refMenu, playUrl })}
+        //   >
+        //     {heart ? <Heart size={34} weight="fill" /> : <Heart size={34} />}
+        //   </div>
+        // }
         favicon={refMenu?.favicon}
         name={refMenu?.name}
       >

@@ -15,7 +15,7 @@ export const Container = styled.div`
   background-color: #fff;
 `;
 
-export const ContainerPlayStations = styled.div`
+export const ContainerPlay = styled.div`
   /* width: 100%; */
   height: 100%;
   display: flex;
@@ -26,4 +26,4 @@ export const ContainerPlayStations = styled.div`
 
 export const Options = styled.div``;
 
-export const IconPlayStation = styled.div``;
+export const IconPlay = styled.div``;

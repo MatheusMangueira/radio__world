@@ -12,8 +12,8 @@ type Props = {
 export const BottomMenu = ({ children, heat, favicon, name }: Props) => {
   return (
     <S.Container>
-      <S.ContainerPlayStations>
-        <S.IconPlayStation>
+      <S.ContainerPlay>
+        <S.IconPlay>
           {favicon === "" ? (
             <p>{name}</p>
           ) : (
@@ -38,10 +38,10 @@ export const BottomMenu = ({ children, heat, favicon, name }: Props) => {
               <p>{name}</p>
             </div>
           )}
-        </S.IconPlayStation>
+        </S.IconPlay>
         {children}
         <S.Options>{heat}</S.Options>
-      </S.ContainerPlayStations>
+      </S.ContainerPlay>
     </S.Container>
   );
 };
