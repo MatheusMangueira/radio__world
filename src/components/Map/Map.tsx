@@ -7,7 +7,7 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import { PlayMusic } from "../BottomMenu/components";
 import { BottomMenu } from "../BottomMenu";
 import { useCallback, useEffect, useState } from "react";
-import { stations } from "../../services/api/radio";
+import { getStations } from "../../services/api/radio";
 // import { Heart } from "@phosphor-icons/react";
 
 const CustomTileLayer = () => {
@@ -35,6 +35,7 @@ export const Map = () => {
   const [playUrl, setPlayUrl] = useState<string>("");
   const [clickedItemId, setClickedItemId] = useState(null);
   const [myFavorite, setMyFavorite] = useState<any>([]);
+  const [data, setData] = useState<any>([]);
 
   useEffect(() => {
     setRefMenu({
@@ -63,12 +64,20 @@ export const Map = () => {
     }
   }, []);
 
-  const addFavorite = useCallback((data: any) => {
-    if (localStorage.hasOwnProperty("myFavorite")) {
-      setMyFavorite(JSON.parse(localStorage?.getItem("myFavorite") || ""));
-    }
-    myFavorite.push({ data });
-    localStorage.setItem("myFavorite", JSON.stringify(myFavorite));
+  // const addFavorite = useCallback((data: any) => {
+  //   if (localStorage.hasOwnProperty("myFavorite")) {
+  //     setMyFavorite(JSON.parse(localStorage?.getItem("myFavorite") || ""));
+  //   }
+  //   myFavorite.push({ data });
+  //   localStorage.setItem("myFavorite", JSON.stringify(myFavorite));
+  // }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getStations();
+      setData(response);
+    };
+    fetchData();
   }, []);
 
   return (
@@ -103,7 +112,7 @@ export const Map = () => {
       >
         <CustomTileLayer />
         <MarkerClusterGroup>
-          {stations?.map(({ id, geoLat, geoLong, name, url, favicon }) => {
+          {data?.map(({ id, geoLat, geoLong, name, url, favicon }: any) => {
             return (
               <Marker
                 icon={customIcon}
