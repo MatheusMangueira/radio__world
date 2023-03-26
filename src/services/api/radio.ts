@@ -6,4 +6,5 @@ const api = new RadioBrowserApi("My Radio App");
 export const stations = await api.searchStations({
   // limit: 10,
   hasGeoInfo: true,
+  
 });

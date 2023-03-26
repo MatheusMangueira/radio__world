@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   position: fixed;
@@ -26,7 +27,7 @@ export const TitleHeader = styled.h1`
   margin-bottom: 1rem;
 `;
 
-export const List = styled.div`
+export const List = styled.a`
   width: 100%;
   display: flex;
   justify-content: start;
@@ -34,6 +35,7 @@ export const List = styled.div`
   gap: 16px;
   cursor: pointer;
   margin-bottom: 0.5rem;
+  text-decoration: none;
   color: #3a3a3a;
   :hover {
     color: #a37b97;

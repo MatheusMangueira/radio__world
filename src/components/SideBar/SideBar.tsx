@@ -6,11 +6,13 @@ const optionsList = [
   {
     id: "1",
     name: "Favoritos",
+    url: "/favoritos",
     icon: <Heart size={20} />,
   },
   {
     id: "2",
     name: "Mais tocadas",
+    url: "/mais-tocadas",
     icon: <Headphones size={20} />,
   },
 ];
@@ -24,7 +26,7 @@ export const SideBar = () => {
         {optionsList.map((item) => {
           return (
             <S.ContainerList>
-              <S.List>
+              <S.List href={item.url}>
                 <S.Icon>{item.icon}</S.Icon>
                 <S.NameList onClick={() => {}} key={item.id}>
                   {item.name}

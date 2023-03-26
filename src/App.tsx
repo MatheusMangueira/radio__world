@@ -1,11 +1,11 @@
 import * as S from "./GlobalStyles";
+import { Outlet } from "react-router-dom";
 import { Home } from "./pages";
-
 
 function App() {
   return (
     <S.Container className="App">
-      <Home />
+      <Outlet />
     </S.Container>
   );
 }
