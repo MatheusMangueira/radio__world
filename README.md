@@ -45,4 +45,4 @@
 
 <h2>Licença</h2>
 
-<p>Este projeto está licenciado sob a <a href="https://github.com/MatheusMangueira/radio__world/LICENSE">licença MIT</a>. Consulte o arquivo LICENSE para obter mais informações.</p>
+<p>Este projeto está licenciado sob a <a href="https://github.com/MatheusMangueira/radio__world/blob/main/LICENSE">licença MIT</a>. Consulte o arquivo LICENSE para obter mais informações.</p>
