@@ -5,8 +5,8 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "vite ",
-    "build": "tsc && vite build",
+    "dev": "vite --mode dev",
+    "build": "vite build --mode dev --base=./",
     "preview": "vite preview"
   },
   "dependencies": {

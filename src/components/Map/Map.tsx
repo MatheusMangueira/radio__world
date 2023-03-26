@@ -1,4 +1,4 @@
-import * as S from "./styles";
+// import * as S from "./styles";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { PopoverRadio } from "../PopoverRadio";
@@ -8,7 +8,7 @@ import { PlayMusic } from "../BottomMenu/components";
 import { BottomMenu } from "../BottomMenu";
 import { useCallback, useEffect, useState } from "react";
 import { stations } from "../../services/api/radio";
-import { Heart } from "@phosphor-icons/react";
+// import { Heart } from "@phosphor-icons/react";
 
 const CustomTileLayer = () => {
   return import.meta.env.VITE_MAPBOX_API_KEY ? (
@@ -35,8 +35,6 @@ export const Map = () => {
   const [playUrl, setPlayUrl] = useState<string>("");
   const [clickedItemId, setClickedItemId] = useState(null);
   const [myFavorite, setMyFavorite] = useState<any>([]);
-
-  const [heart, setHeart] = useState(false);
 
   useEffect(() => {
     setRefMenu({
@@ -72,7 +70,6 @@ export const Map = () => {
     myFavorite.push({ data });
     localStorage.setItem("myFavorite", JSON.stringify(myFavorite));
   }, []);
-
 
   return (
     <>
