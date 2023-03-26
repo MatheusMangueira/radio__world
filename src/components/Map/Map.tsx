@@ -6,7 +6,7 @@ import { Icon } from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { PlayMusic } from "../BottomMenu/components";
 import { BottomMenu } from "../BottomMenu";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { stations } from "../../services/api/radio";
 
 const CustomTileLayer = () => {
@@ -30,13 +30,9 @@ const CustomTileLayer = () => {
 };
 
 export const Map = () => {
-  const [isClicked, setIsClicked] = useState(true);
   const [refMenu, setRefMenu] = useState<any>();
-  const [stationsRadioT, setStationsRadioT] = useState<any>();
-
-  useEffect(() => {
-    setStationsRadioT(stationsRadio);
-  }, []);
+  const [playUrl, setPlayUrl] = useState<string>("");
+  const [clickedItemId, setClickedItemId] = useState(null);
 
   useEffect(() => {
     setRefMenu({
@@ -55,29 +51,25 @@ export const Map = () => {
     iconUrl: "https://cdn-icons-png.flaticon.com/512/10054/10054852.png",
   });
 
-  const stationsRadio = stations.map((station) => ({
-    location: {
-      latitude: station.geoLat || 0,
-      longitude: station.geoLong || 0,
-    },
-    name: station.name,
-    url: station.urlResolved,
-    id: station.id,
-    slug: station.country,
-    favicon: station.favicon,
-  }));
-
-  const urls = stations.map((stations) => stations.url);
+  const play = useCallback(({ name, favicon, url, id }: any) => {
+    setRefMenu({ name, favicon });
+    setPlayUrl(url);
+    if (clickedItemId === id) {
+      setClickedItemId(null); // Desativa o item se ele já estiver clicado
+    } else {
+      setClickedItemId(id); // Ativa o item clicado
+    }
+  }, []);
 
   return (
     <>
       <BottomMenu
-        src={urls && urls}
-        children={<PlayMusic src={urls} />}
-        heat={<div></div>}
+        heat={<div> coração</div>}
         favicon={refMenu?.favicon}
         name={refMenu?.name}
-      />
+      >
+        {playUrl ? <PlayMusic urlMusic={playUrl} /> : <div></div>}
+      </BottomMenu>
       <MapContainer
         style={{
           height: "100vh",
@@ -92,18 +84,18 @@ export const Map = () => {
       >
         <CustomTileLayer />
         <MarkerClusterGroup>
-          {stationsRadio?.map(({ id, location, name, url, favicon }) => {
+          {stations?.map(({ id, geoLat, geoLong, name, url, favicon }) => {
             return (
               <Marker
                 icon={customIcon}
                 key={`place-${id}`}
-                position={[location.latitude, location.longitude]}
+                position={[Number(geoLat), Number(geoLong)]}
                 eventHandlers={{}}
               >
                 <Popup>
                   <PopoverRadio
-                    play={() => setRefMenu({ favicon, name })}
-                    isActived={isClicked}
+                    reference={() => play({ name, favicon, url, id })}
+                    isActived={clickedItemId === id}
                     name={name}
                     img={favicon}
                     height={"50px"}

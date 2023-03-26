@@ -4,20 +4,22 @@ import * as S from "./styles";
 
 type PopoverRadioProps = {
   name?: string;
-  play?: () => void;
+  reference?: () => void;
   img?: string;
   width?: string;
   height?: string;
   isActived?: boolean;
+  play?: () => void;
 };
 
 export const PopoverRadio = ({
   name,
   img,
-  play,
+  reference,
   height,
   width,
   isActived,
+  play,
 }: PopoverRadioProps) => {
   return (
     <>
@@ -25,7 +27,7 @@ export const PopoverRadio = ({
       <S.Container
         isActived={isActived}
         onClick={() => {
-          play && play();
+          reference && reference();
         }}
       >
         {img === "" ? (

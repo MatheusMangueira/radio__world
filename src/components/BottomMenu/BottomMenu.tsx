@@ -3,16 +3,13 @@ import { PlayMusic } from "./components";
 import * as S from "./styles";
 
 type Props = {
-  src?: any;
   children?: JSX.Element;
-
   name?: string;
   favicon?: string;
-
   heat?: JSX.Element;
 };
 
-export const BottomMenu = ({ children, src, heat, favicon, name }: Props) => {
+export const BottomMenu = ({ children, heat, favicon, name }: Props) => {
   return (
     <S.Container>
       <S.ContainerPlayStations>
