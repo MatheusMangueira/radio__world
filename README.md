@@ -43,6 +43,9 @@
   <li>Envie a branch para o seu fork e abra um pull request.</li>
 </ol>
 
+<h2>Autor</h2>
+<li> <a href="https://www.linkedin.com/in/matheus-mangueira-504130230/" alt="linkedin"> Matheus Mangueira </a> </li>
+
 <h2>Licença</h2>
 
 <p>Este projeto está licenciado sob a <a href="https://github.com/MatheusMangueira/radio__world/blob/main/LICENSE">licença MIT</a>. Consulte o arquivo LICENSE para obter mais informações.</p>
