@@ -1,12 +1,15 @@
 import { RadioBrowserApi } from "radio-browser-api";
 
-const api = new RadioBrowserApi("My Radio App");
-
 export const getStations = async () => {
-  // query stations by country code and limit to first 100 stations
+  const api = new RadioBrowserApi("My Radio App");
+  api.setBaseUrl('https://de1.api.radio-browser.info');
+
   const stations = await api.searchStations({
-    // limit: 10,
     hasGeoInfo: true,
-  });
+  })
+    .then((data) => {
+      return data
+    })
+
   return stations;
 };
